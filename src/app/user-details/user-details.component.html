@@ -1,0 +1,64 @@
+<div class="container">
+	<div class="row"> 
+		<div class="row" align="center">
+			<div class="col-xs-6 col-xs-offset-3 well">
+				<div class="row" style="padding:20px">
+					<div class="col-xs-6 col-xs-offset-3" style="height:200px;width:150px; border:1px solid;" >
+						<img [src]="profilePicPath" style="max-width:100%" />
+					</div>
+				</div>
+				<div class="btn-group row">
+					<input type="file" #uploadedImage name="uploadedImage" class="btn btn-primary col-xs-7" />
+					<button class="btn btn-danger col-xs-5" (click)="uploadPic()">Change Profile Pic</button>
+				</div>
+			</div>
+		</div>
+		<form class="form-horizontal col-offset-xs-3" [formGroup]="userDetailsForm">
+			<div class="form-group">
+				<label class="control-label col-xs-2">First Name</label>
+				<div class="col-xs-10">
+					<input type="text" class="form-control" formControlName="fname">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-xs-2">Last Name</label>
+				<div class="col-xs-10">
+					<input type="text" class="form-control" formControlName="lname">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-xs-2">Email</label>
+				<div class="col-xs-10">
+					<input type="email" class="form-control" formControlName="email">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-xs-2">Password</label>
+				<div class="col-xs-10">
+					<input type="text" class="form-control" formControlName="pwd">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-xs-2">Date of Birth</label>
+				<div class="col-xs-10">
+					<input type="date" id="dob" class="form-control" formControlName="dob">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-xs-2">Gender</label>
+				<label class="radio-inline">
+					<input type="radio" formControlName="gender" value="Male"> Male
+				</label>
+				<label class="radio-inline">
+					<input type="radio" formControlName="gender" value="Female"> Female
+				</label>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="button" class="btn btn-warning" value="Back" (click)="goBack()">
+					<input type="submit" class="btn btn-success" value="Update">
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

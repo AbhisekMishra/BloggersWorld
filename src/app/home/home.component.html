@@ -1,0 +1,13 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-2">
+			<app-home-left-nav *ngIf="loggedIn"></app-home-left-nav>
+		</div>
+		<div class="col-xs-8">
+			<app-home-center *ngIf="loggedIn"></app-home-center>
+		</div>
+		<div class="col-xs-2">
+			<app-ad-banner></app-ad-banner>
+		</div>
+	</div>
+</div>

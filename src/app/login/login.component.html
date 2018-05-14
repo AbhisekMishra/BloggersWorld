@@ -1,0 +1,30 @@
+<form class="navbar-form navbar-right row" novalidate #loginForm = "ngForm" (ngSubmit)="login(loginForm.value, $event)">
+	<div class="form-group">
+		<div class="input-group has-feedback" [class.has-error]="email.invalid && (email.dirty || email.touched)">
+			<span class="input-group-addon glyphicon glyphicon-user"></span>
+			<input type="text" class="form-control" id="email"
+		       required placeholder="Username" [(ngModel)]="loginForm.email" name="email"
+		       #email="ngModel" />
+		       <i class="glyphicon glyphicon-remove form-control-feedback" [tooltip]="errorTemplate" placement="bottom" 
+		       *ngIf="email.invalid && (email.dirty || email.touched)"></i>
+				<ng-template #errorTemplate>
+				  <div *ngIf="email.errors.required && (email.dirty || email.touched)">
+				  	Username is required
+				  </div>
+				</ng-template>
+		</div>
+	</div>
+	<div class="form-group">
+	  <div class="input-group">
+		<span class="input-group-addon glyphicon glyphicon-cloud"></span>
+			<input type="password" class="form-control" name="pwd" placeholder="Password" ngModel>
+		</div>
+	</div>
+	<div class="form-group">
+		<button type="submit" class="btn btn-primary">Login</button>
+	</div>
+	<div class="form-group">
+		<div class="loader" *ngIf="showLoader"></div>
+	</div>
+</form>
+

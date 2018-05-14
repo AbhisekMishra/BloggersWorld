@@ -1,0 +1,97 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-8">
+			<button (click)="togglePostArticle()" class="btn btn-success btn-lg">Post an Article</button>
+			<button (click)="togglePostPic()" class="btn btn-warning btn-lg">Post an Image</button>
+		</div>
+		<div class="col-xs-12 text-center">
+			<div class="loader" *ngIf="showLoader"></div>
+		</div>
+		<div class="col-xs-8 container well" style="padding-top:10px" *ngIf="showPostArticle">
+			<form class="form" #article="ngForm" (ngSubmit)="postArticle(article.value, $event)">
+				<div class="form-group">
+					<span class="control-label text-warning">Article Header</span>
+					<div class="">
+						<input type="text" name="articleHeader" class="form-control" placeholder="Your Header goes here .." ngModel/>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="control-label text-warning">Article Body</span>
+					<div class="">
+						<textarea rows="10" name="articleBody" class="form-control" placeholder="Your article content goes here .." ngModel></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="">
+						<input type="submit" value="Post Article" class="btn btn-success btn-lg" />
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-xs-8 container well" style="padding-top:10px" *ngIf="showPostPic">
+			<form class="form" #pic="ngForm" (ngSubmit)="postPic(pic.value, $event)">
+				<div class="form-group">
+					<span class="control-label text-warning">Caption</span>
+					<div class="">
+						<input type="text" name="picCaption" class="form-control" placeholder="Your Header goes here .." ngModel/>
+					</div>
+				</div>
+				<div class="form-group">
+					<span class="control-label text-warning">Choose your image</span>
+					<div class="">
+						<input type="file" class="form-control" (change)="uploadPic($event)"/>
+					</div>
+				</div>
+				<div class="form-group row" style="padding:20px">
+					<div class="col-xs-6 col-xs-offset-3" style="height:200px;width:150px; border:1px solid;" >
+						<img *ngIf="picPath" [src]="picPath" class="img-thumbnail" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="">
+						<input type="submit" value="Post Image" class="btn btn-warning btn-lg" />
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-xs-8" style="padding-top:10px">
+			<ul class="media-list well" *ngFor="let article of (articles | orderBy:order); trackBy: trackByFn; let i=index">
+				<li class="media">
+					<div class="media-left">
+						<a href="#">
+							<img style="width:70px" src="http://localhost:3000/public/uploads/{{article.byUserId.profilePicFileName}}" class="media-object" alt="" />
+						</a>
+					</div>
+					<div class="media-body">
+						<a href="#"><h4>{{article.byUserId.fname + " " + article.byUserId.lname}} </h4></a><small class="pull-right"><i>{{article.additionDate | date: 'd MMM, y, h:mm a'}}</i></small>
+						<h4 class="media-heading text-warning" *ngIf="article.articleHeader">{{article.articleHeader}}</h4>
+						<h4 class="media-heading text-warning" *ngIf="article.picCaption">{{article.picCaption}}</h4>
+						<p *ngIf="article.articleBody">{{article.articleBody}}</p><hr />
+						<img class="img-thumbnail" *ngIf="article.picPath" src="http://localhost:3000/public/uploads/{{article.picPath}}" />
+						<button class="btn btn-sm {{likedByLoggedInUser(article)}}" (click)="toggleLike(article, $event)" >Like</button>
+						<button class="btn btn-sm btn-danger" (click)="article.showCommentBox = !article.showCommentBox">Comment</button>
+						<div *ngIf="article.showCommentBox" style="padding-top:10px">
+							<form #comment="ngForm" class="form-inline" (ngSubmit)="postComment(comment.value, article, $event, i)">
+									<input type="text" name="comment" class="form-control col-xs-9" ngModel>
+									<button type="submit" class="btn btn-warning btn-small"  >Comment</button>
+							</form>
+						</div>
+						<ul class="media-list" *ngFor="let comment of (article.comments | orderBy:order)" style="padding-top:10px">
+							<li class="media">
+								<div class="media-left">
+									<a href="#">
+										<img style="width:70px" src="http://localhost:3000/public/uploads/{{comment.byUserId.profilePicFileName}}" class="media-object" alt="" />
+									</a>
+								</div>
+								<div class="media-body">
+									<h4 class="media-heading">{{comment.byUserId.fname + " " + comment.byUserId.lname}} </h4><small class="pull-right"><i>{{comment.additionDate | date: 'd MMM, y, h:mm a'}}</i></small>
+									<p>{{comment.comment}}</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
